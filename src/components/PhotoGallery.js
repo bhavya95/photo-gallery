@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { FlatList, StyleSheet, Text } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchImages } from '../action';
+import React, { useEffect, useState} from 'react';
+import {FlatList, StyleSheet, Text} from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
+import {fetchImages} from '../action';
 import Button from './Button';
 import ErrorView from './ErrorView';
 import ImageCard from './ImageCard';
@@ -41,6 +41,10 @@ export default function PhotoGallery() {
 
   const toggleView = () => setView((changed) => !changed);
 
+  const gridKeyExtractor = (item) => `${item.id}`;
+
+  const verticalKeyExtractor = (item) => item.title;
+
   return (
     <>
       <Text style={styles.headerText}>PhotoGallery</Text>
@@ -62,7 +66,7 @@ export default function PhotoGallery() {
               data={images.data}
               numColumns={2}
               renderItem={renderListItem}
-              keyExtractor={(item) => `${item.id}`}
+              keyExtractor={gridKeyExtractor}
               key="-"
               initialNumToRender={10}
             />
@@ -72,7 +76,7 @@ export default function PhotoGallery() {
               data={images.data}
               numColumns={1}
               renderItem={renderListItem}
-              keyExtractor={(item) => item.title}
+              keyExtractor={verticalKeyExtractor}
               initialNumToRender={10}
             />
           )}
