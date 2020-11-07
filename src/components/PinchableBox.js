@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {Animated, Platform, View, StyleSheet} from 'react-native';
 import {
   gestureHandlerRootHOC,
@@ -8,6 +8,14 @@ import {
 
 function PinchableBox({imageUrl}) {
   const scale = useRef(new Animated.Value(1)).current;
+  const translateY = useRef(new Animated.Value(2000)).current;
+
+  useEffect(()=>{
+    Animated.timing(translateY,{
+      toValue:0,
+      useNativeDriver:true
+    }).start()
+  },[])
 
   const onPinchEvent = Animated.event(
     [
@@ -39,7 +47,7 @@ function PinchableBox({imageUrl}) {
           style={{
             width: '75%',
             height: '75%',
-            transform: [{scale: scale}],
+            transform: [{scale: scale},{translateY}],
           }}
         />
       </PinchGestureHandler>
